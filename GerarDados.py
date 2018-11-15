@@ -26,9 +26,10 @@ def obterTexto():
 
 # Pegamos o diretorio
 # Damos a entrada a o lugar de gravar, permissoes, e codificacao
+# O codigo de diretorio foi corrigido para aceitar Windows, Mac e Linux
 
 def gerarArquivo():
-      diretorio = os.getcwd()
+      diretorio = r'%s' % os.getcwd().replace('\\','/')
       entrada = open(diretorio, 'w+', encoding = 'UTF-8')
       obterTexto()
       entrada.writelines(texto)
