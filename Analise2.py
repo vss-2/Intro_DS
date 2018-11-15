@@ -31,7 +31,8 @@ def tabela(valIMC):
 # Se houver mais de uma variavel para devemos "desempacotalas", e ha, entao True
 # Tipo de dado
 
-altura, peso, forca = np.loadtext(os.getcwd()+'\\peso.csv', delimiter=';', unpack = True, dtype = 'float')
+localArquivo = r'%s' % os.getcwd().replace('\\','/') + '/peso.csv'
+altura, peso, forca = np.loadtext(localArquivo + '/peso.csv', delimiter=';', unpack = True, dtype = 'float')
 
 # Se pedirmos para printar, observer que saira tudo organizado
 print(altura)
