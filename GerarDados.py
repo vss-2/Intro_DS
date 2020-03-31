@@ -18,7 +18,7 @@ texto = []
 
 def obterTexto():
       for x in range(1,100):
-            texto.append(str(uniform(1.50, 2.20)) + ';\t' + str(uniform(50, 120)) + ';\t' + str(randint(0, 10)) + '\n')
+            texto.append(str(uniform(1.50, 2.20)) + ';' + str(uniform(50, 120)) + ';' + str(randint(0, 10)) + '\n')
       return texto
 
 
@@ -28,7 +28,7 @@ def obterTexto():
 
 def criarArquivo(ano, mes, dia, hor, minu):
       try: 
-            nomeArquivo = ano+mes+dia+hor+minu+'.txt'
+            nomeArquivo = ano+mes+dia+hor+minu+'.csv'
             arquivoAberto = open(nomeArquivo, 'w+')
             return arquivoAberto
       except IOError:
