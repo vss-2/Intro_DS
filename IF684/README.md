@@ -1,0 +1,2 @@
+# Sistemas Inteligentes
+O ```main.py``` contém uma interface Tkinter (que até então não é muito funcional, tenho que ler sobre Threads em Python) que quando executada faz gera um grid (por padrão 10x10) solicita a entrada de um objetivo (0-9 x 0-9) e de um ponto de partida (0-9 x 0-9), e ele usará o algoritmo que não estiver comentado para chegar, a partir do ponto de partida, ao objetivo.
