@@ -25,6 +25,23 @@ def estaNoGrid(x, y):
 		print('Não está dentro do grid: ', x, y)
 		return False
 
+def menorDistancia(x, y, objetivo):
+	return sqrt((objetivo[0] - a)**2 + (objetivo[1] - b)**2)
+
+def dfs(x, y, objetivo, pilha, visitados, janela):
+	print('Centro: ', x, y)
+	for a in range(x-1, x+2):
+		for b in range(y-1, y+2):
+			if (estaNoGrid(a,b) and ([a,b] not in visitados)):
+				criarQuadrado(janela, 'yellow', a, b)
+				pilha.append([a,b])
+				if(a == objetivo[0] and b == objetivo[1]):
+					print('Achei o objetivo')
+					return
+				else:
+					dfs(a, b, objetivo, pilha, visitados, janela)
+	return
+
 def bfs(x, y, objetivo, fila, janela):
 	print('Centro: ', x, y)
 	for a in range(x-1, x+2):
@@ -54,8 +71,9 @@ def main():
 			criarQuadrado(base, 'red', i, j)
 	criarQuadrado(base, 'green', objetivo[0], objetivo[1])
 	criarQuadrado(base, 'blue', posinicial[0], posinicial[0])
-	fila = []
+	fila, pilha, visitados = []
 	bfs(posinicial[0], posinicial[1], objetivo, fila, base)
+	dfs(posinicial[0], posinicial[1], objetivo, pilha, visitados, base)
 	base.mainloop()
 
 main()
