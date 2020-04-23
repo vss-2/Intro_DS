@@ -1,4 +1,5 @@
 from tkinter import *
+from functools import reduce
 from time import sleep
 
 # Tamanho de cada quadrado
@@ -26,20 +27,37 @@ def estaNoGrid(x, y):
 		return False
 
 def menorDistancia(x, y, objetivo):
-	return sqrt((objetivo[0] - a)**2 + (objetivo[1] - b)**2)
+	return ((objetivo[0] - a)**2 + (objetivo[1] - b)**2)**(1/2)
+
+def custoUniforme(x, y, objetivo, lista_MD, lista, janela):
+	for a in range(x-1, x+2):
+		for b in range(y-1, y+2):
+			lista_MD.append(menorDistancia(a, b, objetivo))
+			lista.append([a,b])
+			if(a == objetivo[0] and b == objetivo[1]):
+				print('Achei o objetivo')
+				return
+			else:
+				menor = reduce(lambda i, j: min(i, j), lista_MD)
+				parXY = lista[lista_MD.index(menor)]
+		
+	custoUniforme(parXY[0], parXY[1], objetivo, lista_MD, lista, janela)
+	return
+				
+			
 
 def dfs(x, y, objetivo, pilha, visitados, janela):
 	print('Centro: ', x, y)
+	criarQuadrado(janela, 'yellow', x, y)
 	for a in range(x-1, x+2):
 		for b in range(y-1, y+2):
 			if (estaNoGrid(a,b) and ([a,b] not in visitados)):
-				criarQuadrado(janela, 'yellow', a, b)
 				pilha.append([a,b])
 				if(a == objetivo[0] and b == objetivo[1]):
 					print('Achei o objetivo')
 					return
-				else:
-					dfs(a, b, objetivo, pilha, visitados, janela)
+	parXY = pilha.pop()
+	dfs(parXY[0], parXY[1], objetivo, pilha, visitados, janela)
 	return
 
 def bfs(x, y, objetivo, fila, janela):
@@ -74,6 +92,7 @@ def main():
 	fila, pilha, visitados = []
 	bfs(posinicial[0], posinicial[1], objetivo, fila, base)
 	dfs(posinicial[0], posinicial[1], objetivo, pilha, visitados, base)
+	custoUniforme(posinicial[0], posinicial[1], objetivo, [], [], janela)
 	base.mainloop()
 
 main()
