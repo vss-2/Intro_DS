@@ -94,3 +94,58 @@ Esta condição deve ser checada a cada geração. Algumas condições:
     Queda a nível mínimo de diversidade.
     Quantidade máxima de gerações sem aumento de fitness.
     Busca por alguma característica específica do problema.
+
+### Aula 4:
+#### Usando Algoritmos Evolutivos
+
+
+#### Introdução a 8-Rainhas
+Podemos usar do problema das 8 rainhas em conjunto com algoritmos genéticos para solucioná-lo de forma não trivial. Com os conhecimentos já vistos anteriormente sabemos que é necessária a existência de fenótipos e genes para nossa população. Para esta situação particular, tomemos como fenótipos as configurações de cada rainha no tabuleiro; Como genótipos, temos: as permutações de 1 à 8 num vetor de tamanho 8, onde cada valor representa a posição de cada rainha em sua respectiva linha. Desta forma, teremos como representar todas as situações do tabuleiro (válidas e inválidas) e assim usar AEs para resolver o problema. <br>
+
+#### Definindo fenótipo e genótipo
+Para sabermos o fit, precisamos definir a penalidade, dadas as configurações das rainhas.
+Sabemos que uma solução é inválida quando uma rainha está atacando outra. Quanto mais rainhas estiverem em uma posição de ataque a outra rainha, maior penalidade ela deve ter, logo, a penalidade de dada rainha (no nosso genótipo representado em array) é justamente a quantidade de rainhas que ela acaba, e a qualidade de uma configuração (fenótipo), é a soma das penalidades. Nessa abordagem estamos tentando maximizar a configuração, logo: Fitness = 1 / (1 + penalidade).
+
+
+#### Seleção
+
+Para seleção dos pais, poderemos usar, por exemplo, as abordagens: 
+    Torneio, a partir de 5 indivíduos escolhidos de forma aleatória, escolheremos os 2 melhores como pais.
+    Roleta, dê uma chance para cada indivíduo da população, sendo a probabilidade proporcional ao seu fitness, para então escolher de 2 pais.
+
+
+#### Recombinação
+
+Como precisamos garantir que seja encontrada uma solução, optamos por definir que a recombinação gerará 2 indivíduos. Para definir como funciona o nosso crossover:
+    Escolhemos aleatoriamente um ponto (posição do array);
+    Os valores de antes do ponto serão copiados dos pais;
+    Os valores depois do ponto serão os valores, na ordem de aparição, trocados entre os pais;
+
+#### Mutação
+
+Algumas alternativas que podemos usar para simular a mutação seriam:
+    Permutando aleatoriamente dois valores de posição do genótipo(array);
+    Modificando aleatorialmente algum(s) valor(es) do genótipo(array);
+    
+   
+#### Seleção de sobrevivência
+
+A abordagem que vamos utilizar consistem em trocar indivíduos ruins por novos na população (fixa), logo:
+    Ordenar a população pelo fitness (decrescente);
+    Substitua um indivíduo que tenha fitness menor que o fitness do filho recém gerado;
+    
+
+#### Tabela com nossas escolhas tomadas para abordar problema das 8-Rainhas
+
+| Característica                | Tipo                                  |
+|-------------------------------|---------------------------------------|
+| Representação                 | Permutação                            |
+| Probabilidade de recombinação | 100%                                  |
+| Técnica de mutação            | Swap                                  |
+| Probabilidade de mutação      | 80%                                   |
+| Método de seleção dos pais    | Melhor de 2 entre 5 aleatórios        |
+| Seleção dos sobreviventes     | Substitua o pior                      |
+| Tamanho da população          | 100                                   |
+| Número de filhos por pais     | 2                                     |
+| Inicialização                 | Aleatória                             |
+| Condição de término           | Solução encontrada ou 10.000 seleções |
