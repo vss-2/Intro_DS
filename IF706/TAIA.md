@@ -149,3 +149,52 @@ A abordagem que vamos utilizar consistem em trocar indivíduos ruins por novos n
 | Número de filhos por pais     | 2                                     |
 | Inicialização                 | Aleatória                             |
 | Condição de término           | Solução encontrada ou 10.000 seleções |
+
+#### Comportamento e fases típicas de um Algoritmo Evolutivo
+
+* Fases iniciais <br>
+    Temos no conjunto uma distribuição populacional quase aleatória.
+
+* Fase intermediárias <br>
+    A população encontrará-se arrumada em torno das "colinas" (regiões com pontuação da população mais próxima do objetivo).
+    
+* Fase finais <br>
+    População concentrada nos picos das colinas (a população está concentrada majoritariamente no melhor objetivo, ou arredores,  encontrados).
+
+#### Tempo de espera
+
+A relação entre melhor fitness populacional X número de inerações parece, usualmente, o gráfico de uma função logarítmica. 
+Ou seja, há um crescimento rápido do fitness nas primeiras iterações e um crescimento mínimo depois de várias iterações. <br>
+O tempo de espera depende basicamente do quão necessário é a melhoria para a solução do problema, ou a quantidade de tempo disponível.
+    
+#### Inicialização esperta
+
+Podemos poupar iterações, e consequentemente tempo, através de uma inicialização direcionada (ou seja, não aleatória). 
+Entretanto, devemos ter o cuidado para não se restrigir o espaço de genótipo, 
+por exemplo, enviesando a solução (ou, no caso, nos restringindo a um máximo local). 
+Também devemos nos atentar se há possibilidade, pois é possível que não existam boas soluções.
+    
+    
+#### Algoritmos Evolutivos no Contexto Global - Considerações
+
+Algoritmos evolutivos são ferramentas robustas de resolução de problemas. 
+Na maioria dos casos, tais ferramentas aplicadas especificamente a um problema podem ter melhor desempenho que um algoritmo genérico, entretanto, 
+sua utilização será limitada a situação e sua execução (geralmente) não será boa para todas as instâncias do problema. <br>
+Dado que existem muitas abordagens sobre o uso dos Algoritmos Evolutivos, 
+a meta é ter uma ferramenta robusta que tenha um desempenho tão bom quanto a abordagem específica e que consiga abranger um grande espectrode problemas e instâncias.
+    
+#### Algoritmos Evolutivos e Conhecimentos de Domínios
+
+Nos anos 90 surgiram correntes que tinha como ideal adicionar conhecimento específico dos problemas junto aos AEs, na tentativa de beneficiá-los com conhecimento prévio, por exemplo, uso de métodos guiados. Ainda que o montate de conhecimento pudesse ser variável, resultado da inserção do mesmo não foi a esperada. Houve uma deformação na curva de desempenho que causou picos, uma vez que o algoritmo atuava de forma ótima em casos específicos, mas perdia tanto para os algoritmos evolutivos sem conhecimento prévio, como para busca aleatória, em casos gerais. <br>
+    Apesar da aparente estagnação, teorias recentes sugerem que a busca por um algoritmo de propósito geral pode ser frutífera.
+    
+#### Computação Evolutiva - Considerações Finais
+
+Podemos resumir que a computação evolutiva trata-se de obter uma otimização global. Esta otimização é a busca pela melhor solução X sobre um conjunto fixo S. Ela pode fazer uso de duas abordagens: <br>
+* Determinística <br> Garante encontrar X, porém pode ter custo de tempo superpolinomial (ou seja, sem tempo de conclusão determinado).
+* Heurística <br> Regras de decisão são aplicadas para gerar a próxima solução, tal que, solução X pertence ao conjunto fixo S, mas nada garante que as soluções encontradas são ótimas.
+    
+Algumas heurísticas impõem uma estrutura local sobre o conjunto S, de tal forma que elas podem garantir o melhor ponto em uma estrutura (são Algorítmos do tipo [Hill Climb](https://en.wikipedia.org/wiki/Hill_climbing)). Esta abordagem normalmente encontra vários ótimos locais (podendo não achar o global), mas é considerada pois encontra tais soluções rapidamente. Outras heurísticas utilizadas visam atuar em: <br>
+* Uso de população
+* Uso de múltiplos operadores de busca estocásticos (indeterminados, especialmente variando os operadores, fornecendo mais de um parâmetro)
+* Seleção estocástica
