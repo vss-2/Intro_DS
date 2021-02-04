@@ -1,0 +1,1 @@
+#### O projeto de Tópicos Avançados em Gerenciamento de Dados e Informação foi para [este repositório](https://github.com/vss-2/IF697-Projeto-Data-Science]).
