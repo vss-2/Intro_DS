@@ -1,0 +1,71 @@
+# Algoritmos (BFS, DFS, A*, UCS, Greedy)
+Algoritmo: BFS
+# Formato: 0 1, 0 3, 1 2
+Estado inicial:
+1
+Estado final:
+4
+Conjunto de Estados:
+0 1
+0 2
+1 2
+2 3
+3 4
+
+bdfs = BFS_DFS('DFS', 0, 4)
+bdfs.inserir(0, 1)
+bdfs.inserir(0, 2)
+bdfs.inserir(1, 2)
+bdfs.inserir(2, 3)
+bdfs.inserir(3, 4)
+bdfs.executar()
+
+# Algoritmos (BFS, DFS, A*, UCS, Greedy)
+Algoritmo: UCS
+# Formato: 0 1, 0 3, 1 2
+Estado inicial:
+1
+Estado final:
+4
+Conjunto de Estados:
+0 1 30
+0 2 15
+1 2 17
+2 3 11
+3 4 9
+
+ucss = UCS(1,4)
+ucss.inserir(0, 1, 30)
+ucss.inserir(0, 2, 15)
+ucss.inserir(1, 2, 17)
+ucss.inserir(2, 3, 11)
+ucss.inserir(3, 4, 9)
+ucss.executar()
+
+0 1 2
+0 3 5
+1 6 1
+3 1 5
+3 6 6
+3 4 2
+2 1 4
+4 2 4
+4 5 3
+5 2 6
+5 6 3
+6 4 7
+
+ucss = UCS(0, 6)
+ucss.inserir(0, 1, 2)
+ucss.inserir(0, 3, 5)
+ucss.inserir(1, 6, 1)
+ucss.inserir(3, 1, 5)
+ucss.inserir(3, 6, 6)
+ucss.inserir(3, 4, 2)
+ucss.inserir(2, 1, 4)
+ucss.inserir(4, 2, 4)
+ucss.inserir(4, 5, 3)
+ucss.inserir(5, 2, 6)
+ucss.inserir(5, 6, 3)
+ucss.inserir(6, 4, 7)
+ucss.executar()

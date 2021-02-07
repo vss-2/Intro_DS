@@ -26,6 +26,9 @@ class BFS_DFS:
         return
 
     def executar(self):
+        # Uma implementação adicional que pode ser feita e
+        # não está nos códigos tradicionais é colocar uma condicional para parar
+        # o BFS ou DFS, já ambos tradicionalmente eles percorrem o grafo todo
 
         # Largura = fila (remoção do primeiro)
         if(self.alg == 'BFS'):
@@ -88,18 +91,8 @@ class UCS:
     def executar(self):
         self.visitados.add(self.inicio)
         custo = 0
-        trajeto = [[self.inicio, 0]]
+        trajeto = [self.inicio]
         while(self.fim not in self.visitados and len(self.grafo)>0):
-
-            for g in self.grafo:
-                # Ver se há entre os nós visitados um vértice que leve ao nó do fim
-                if(g[0] in self.visitados and g[1] == self.fim):
-                    trajeto.append(g)
-                    custo += g[2]
-            
-            # Se já tivermos chegado no objetivo acima
-            if(trajeto[len(trajeto)-1] == self.fim):
-                break
 
             # Vemos se há vértice entre origem (já visitada)
             # e nó destino (ainda não visitado).
@@ -141,46 +134,58 @@ if __name__ == "__main__":
     alg_ucs     = UCS(0, 0)
     alg_astar   = Astar()
 
-    with open('config.txt') as arq:
+    # Para efeito de exemplificação, o código considera entrada amigável, ou seja:
+    # grafos conexos, e que exista caminho entre início e fim
+    with open('input.txt') as arq:
         linhas = arq.readlines()
-        l = linhas.pop(0)
         while(len(linhas) > 0):
-            if(l.startswith('#')):
-                l = linhas.pop(0)
+            l = linhas.pop(0)
+            if(l.startswith('#') or l == '\n'):
                 continue
             
             if(l.startswith('Algoritmo')):
-                l = linhas.pop(0)
                 algoritmo = l.split(':')[1].strip()
-                if(algoritmo == 'BFS' or algoritmo == 'DFS'):
-                    alg_bfs_dfs = BFS_DFS(algoritmo, est_inicial, est_final)
-                elif(algoritmo == 'UCS'):
-                    UCS(l)
-                elif(algoritmo == 'A*'):
-                    Astar(l)
-                if(algoritmo == 'BFS' or algoritmo == 'DFS' or algoritmo == 'UCS' or algoritmo == 'A*'):
+                if(algoritmo != 'BFS' and algoritmo != 'DFS' and algoritmo != 'UCS' and algoritmo != 'A*'):
                     print('\nAlgoritmo não identificado!')
                     exit()
-                 
             
             if(l.startswith('Estado inicial')):
+                est_inicial = l.split(':')[1].strip()
                 l = linhas.pop(0)
-                est_inicial = l.strip()
+                if(l.startswith('Estado final')):
+                    est_final   = l.split(':')[1].strip()
+                    if(algoritmo == 'BFS' or algoritmo == 'DFS'):
+                        alg_bfs_dfs = BFS_DFS(algoritmo, est_inicial, est_final)
+                    elif(algoritmo == 'UCS'):
+                        alg_ucs = UCS(est_inicial, est_final)
+                    elif(algoritmo == 'A*'):
+                        Astar(l)
 
-            if(l.startswith('Estado final')):
-                l = linhas.pop(0)
-                est_final   = l.strip()
 
             if(l.startswith('Conjunto de Estados:')):
-                print(l)
                 while(len(linhas) > 0):
                     l = linhas.pop(0)
+                    if(l=='\n'):
+                        # Se tiver encerrado a entrada, executa o algoritmo
+                        print('Iniciando {}'.format(algoritmo))
+                        if(algoritmo == 'BFS' or algoritmo == 'DFS'):
+                            alg_bfs_dfs.executar()
+                        elif(algoritmo == 'UCS'):
+                            alg_ucs.executar()
+                        elif(algoritmo == 'A*'):
+                            alg_astar.executar()
+                        else:
+                            exit()
+                        print('--------------------------------------')
+                        break
+
                     if(algoritmo == 'BFS' or algoritmo == 'DFS'):
                         alg_bfs_dfs.inserir(int(l.split()[0]), int(l.split()[1]))
                     elif(algoritmo == 'UCS'):
-                        alg_ucs.inserir(int(l.split()[0]), int(l.split()[1]))
+                        alg_ucs.inserir(int(l.split()[0]), int(l.split()[1]), int(l.split()[2]))
                     elif(algoritmo == 'A*'):
                         Astar(l)
+
 
     arq.close()
     exit()
