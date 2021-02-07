@@ -86,7 +86,7 @@ class UCS:
     def executar(self):
         self.visitados.add(self.inicio)
         custo = 0
-        trajeto = [self.inicio]
+        trajeto = [[self.inicio, 0]]
         while(self.fim not in self.visitados and len(self.grafo)>0):
 
             # Vemos se há vértice entre origem já visitada 
@@ -97,6 +97,7 @@ class UCS:
                 # Atualização do custo e trajeto, remoção do vértice pego 
                 # reordenação da fila de prioridades
                 trajeto.append(self.grafo[0][1])
+                # Bug identificado: trajeto tem que verificar quem são os nós anteriores para atualizar o custo corretamente e deve guardar o par [novo_visitado, custo]
                 custo += self.grafo[0][2]
                 self.visitados.add(self.grafo[0][1])
                 self.grafo.pop(0)
