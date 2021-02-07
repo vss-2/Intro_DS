@@ -26,6 +26,7 @@ class BFS_DFS:
         return
 
     def executar(self):
+
         # Largura = fila (remoção do primeiro)
         if(self.alg == 'BFS'):
             fila = []
@@ -49,6 +50,7 @@ class BFS_DFS:
             return
         
         # Profundidade = pilha (remoção do último)
+        # Lembrando que a pilha pode ser implementada de forma recursiva
         else:
             pilha = []
             
@@ -89,22 +91,38 @@ class UCS:
         trajeto = [[self.inicio, 0]]
         while(self.fim not in self.visitados and len(self.grafo)>0):
 
-            # Vemos se há vértice entre origem já visitada 
-            # e nó destino ainda não visitado.
+            for g in self.grafo:
+                # Ver se há entre os nós visitados um vértice que leve ao nó do fim
+                if(g[0] in self.visitados and g[1] == self.fim):
+                    trajeto.append(g)
+                    custo += g[2]
+            
+            # Se já tivermos chegado no objetivo acima
+            if(trajeto[len(trajeto)-1] == self.fim):
+                break
+
+            # Vemos se há vértice entre origem (já visitada)
+            # e nó destino (ainda não visitado).
             # Olhamos o primeiro da fila de prioridades
             if(self.grafo[0][0] in self.visitados and self.grafo[0][1] not in self.visitados):
                 
-                # Atualização do custo e trajeto, remoção do vértice pego 
-                # reordenação da fila de prioridades
+                # Atualização do custo e trajeto
                 trajeto.append(self.grafo[0][1])
-                # Bug identificado: trajeto tem que verificar quem são os nós anteriores para atualizar o custo corretamente e deve guardar o par [novo_visitado, custo]
                 custo += self.grafo[0][2]
+
+                for g in self.grafo:
+                    if(g[1] == self.grafo[0][1]):
+                        # Atualização do custo dos nós acessados pelo visitado
+                        g[2] += self.grafo[0][2]
+
+                # Remoção do vértice pego, adicionando no visitado e
+                # reordenação da fila de prioridades
                 self.visitados.add(self.grafo[0][1])
                 self.grafo.pop(0)
                 self.grafo.sort(key=lambda x: x[2])
             else:
                 # Caso usar o menor vértice não seja possível, jogo ele no fim 
-                # e a próxima iteração vai ver se o 2o me
+                # da fila e a próxima iteração vamos ver se o 2o melhor serve
                 self.grafo.append(self.grafo[0])
                 self.grafo.pop(0)
                 print(self.grafo)
